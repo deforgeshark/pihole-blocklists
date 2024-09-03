@@ -1,0 +1,136 @@
+sudo bash
+passwd root
+set new root password
+confirm new root password
+apt update && apt upgrade -y
+apt install tmux && apt install screen
+
+nano /etc/ssh/sshd_config
+Ctrl+w type permit enter
+find permit root login & change to PermitRootLogin yes (remove the # from the front to uncomment the code)
+to exit nano
+service sshd restart
+exit
+
+ssh root@raspiIpAddress
+password
+
+curl -sSL https://install.pi-hole.net | bash
+ok
+ok
+continue
+eth 0 - Select
+Quad 9 (Filtered, DNSSEC) Select ok
+yes,yes,yes,continue
+
+pihole -a -p
+set password for pihole webadmin
+
+sudo apt install unbound
+nano /etc/unbound/unbound.conf.d/pi-hole.conf
+Paste
+server:
+    # If no logfile is specified, syslog is used
+    # logfile: "/var/log/unbound/unbound.log"
+    verbosity: 0
+
+    interface: 127.0.0.1
+    port: 5335
+    do-ip4: yes
+    do-udp: yes
+    do-tcp: yes
+
+    # May be set to yes if you have IPv6 connectivity
+    do-ip6: no
+
+    # You want to leave this to no unless you have *native* IPv6. With 6to4 and
+    # Terredo tunnels your web browser should favor IPv4 for the same reasons
+    prefer-ip6: no
+
+    # Use this only when you downloaded the list of primary root servers!
+    # If you use the default dns-root-data package, unbound will find it automatically
+    #root-hints: "/var/lib/unbound/root.hints"
+
+    # Trust glue only if it is within the server's authority
+    harden-glue: yes
+
+    # Require DNSSEC data for trust-anchored zones, if such data is absent, the zone becomes BOGUS
+    harden-dnssec-stripped: yes
+
+    # Don't use Capitalization randomization as it known to cause DNSSEC issues sometimes
+    # see https://discourse.pi-hole.net/t/unbound-stubby-or-dnscrypt-proxy/9378 for further details
+    use-caps-for-id: no
+
+    # Reduce EDNS reassembly buffer size.
+    # IP fragmentation is unreliable on the Internet today, and can cause
+    # transmission failures when large DNS messages are sent via UDP. Even
+    # when fragmentation does work, it may not be secure; it is theoretically
+    # possible to spoof parts of a fragmented DNS message, without easy
+    # detection at the receiving end. Recently, there was an excellent study
+    # >>> Defragmenting DNS - Determining the optimal maximum UDP response size for DNS <<<
+    # by Axel Koolhaas, and Tjeerd Slokker (https://indico.dns-oarc.net/event/36/contributions/776/)
+    # in collaboration with NLnet Labs explored DNS using real world data from the
+    # the RIPE Atlas probes and the researchers suggested different values for
+    # IPv4 and IPv6 and in different scenarios. They advise that servers should
+    # be configured to limit DNS messages sent over UDP to a size that will not
+    # trigger fragmentation on typical network links. DNS servers can switch
+    # from UDP to TCP when a DNS response is too big to fit in this limited
+    # buffer size. This value has also been suggested in DNS Flag Day 2020.
+    edns-buffer-size: 1232
+
+    # Perform prefetching of close to expired message cache entries
+    # This only applies to domains that have been frequently queried
+    prefetch: yes
+
+    # One thread should be sufficient, can be increased on beefy machines. In reality for most users running on small networks or on a single machine, it should be unnecessary to seek performance enhancement by increasing num-threads above 1.
+    num-threads: 1
+
+    # Ensure kernel buffer is large enough to not lose messages in traffic spikes
+    so-rcvbuf: 1m
+
+    # Ensure privacy of local IP ranges
+    private-address: 192.168.0.0/16
+    private-address: 169.254.0.0/16
+    private-address: 172.16.0.0/12
+    private-address: 10.0.0.0/8
+    private-address: fd00::/8
+    private-address: fe80::/10
+CTRL+O to save
+CTRL+X to exit nano
+
+nano /etc/dnsmasq.d/99-edns.conf
+paste edns-packet-max=1232
+CTRL+O to save
+CTRL+X to exit nano
+
+#Login to pihole webconfig
+http://<remote IP address>:80/admin
+Login with password set in line 22
+Settings - DNS - Custom 1 - Set to 127.0.0.1#5335 & untick others
+Ad-lists + Address add the contence of "pihole List of blocklists.txt" - Description = Bulk Add 1
+Add DNS CNAMES for DHCP reserved addresses (to identify your network devices later in the logging)
+pihole -g
+
+#INSTALL TENABLE NESSUS (Requirements are apparently 6-8GB ram & 64BG micro SD Card, you dont have either it's not really an issue)
+cd /home/pi/Desktop
+curl --request GET \
+  --url 'https://www.tenable.com/downloads/api/v2/pages/nessus/files/Nessus-10.8.2-raspberrypios_armhf.deb' \
+  --output 'Nessus-10.8.2-raspberrypios_armhf.deb'
+
+dpkg -i ./Nessus-10.8.2-raspberrypios_armhf.deb
+/bin/systemctl start nessusd.service
+
+you can check this port is listening with this command
+netstat -a | grep -i 8834
+
+#login to tenable nessus essentials
+https://<remote IP address>:8834
+enter details & follow prompts
+
+Wait while it gets it up, it'll be a while
+continue, register for tenable nessus essentials
+throw in a legit email & hit continue it'll register it for you for free
+it'll then dl and setup new plugins
+wait for it to compile plugins, thiswill also take a while probably running at 100%
+Settings - Setup Custom CA;'s
+Scans - New Scan setup IpRange
