@@ -26,7 +26,7 @@ yes,yes,yes,continue
 pihole -a -p
 set password for pihole webadmin
 
-sudo apt install unbound
+apt install unbound
 nano /etc/unbound/unbound.conf.d/pi-hole.conf
 Paste
 server:
@@ -108,7 +108,8 @@ service unbound restart
 #Login to pihole webconfig
 http://<remote IP address>:80/admin
 Login with password set in line 22
-Settings - DNS - Custom 1 - Set to 127.0.0.1#5335 & untick others
+Settings - DNS - Custom 1 - Set to 127.0.0.1#5335 & untick others & turn on DNSSEC & save
+
 Ad-lists + Address add the contence of "pihole List of blocklists.txt" - Description = Bulk Add 1
 Add DNS CNAMES for DHCP reserved addresses (to identify your network devices later in the logging)
 pihole -g
