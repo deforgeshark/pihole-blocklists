@@ -103,6 +103,8 @@ paste edns-packet-max=1232
 CTRL+O to save
 CTRL+X to exit nano
 
+service unbound restart
+
 #Login to pihole webconfig
 http://<remote IP address>:80/admin
 Login with password set in line 22
