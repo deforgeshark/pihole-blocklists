@@ -16,7 +16,6 @@ https://blocklistproject.github.io/Lists/redirect.txt
 https://blocklistproject.github.io/Lists/scam.txt
 https://blocklistproject.github.io/Lists/torrent.txt
 https://blocklistproject.github.io/Lists/tracking.txt
-https://dbl.oisd.nl/
 https://gist.githubusercontent.com/anudeepND/adac7982307fec6ee23605e281a57f1a/raw/5b8582b906a9497624c3f3187a49ebc23a9cf2fb/Test.txt
 https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt
 https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
@@ -112,18 +111,7 @@ https://reddestdream.github.io/Projects/MinimalHosts/etc/MinimalHostsBlocker/min
 https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
 https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
 https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
-https://someonewhocares.org/hosts/hosts
-https://someonewhocares.org/hosts/zero/hosts
 https://urlhaus.abuse.ch/downloads/hostfile/
-https://v.firebog.net/hosts/AdguardDNS.txt
-https://v.firebog.net/hosts/Admiral.txt
-https://v.firebog.net/hosts/Easylist.txt
-https://v.firebog.net/hosts/Easyprivacy.txt
-https://v.firebog.net/hosts/neohostsbasic.txt
-https://v.firebog.net/hosts/Prigent-Ads.txt
-https://v.firebog.net/hosts/Prigent-Crypto.txt
-https://v.firebog.net/hosts/Prigent-Malware.txt
-https://v.firebog.net/hosts/static/w3kbl.txt
 https://winhelp2002.mvps.org/hosts.txt
 https://www.dshield.org/feeds/suspiciousdomains_High.txt
 https://www.dshield.org/feeds/suspiciousdomains_Low.txt
