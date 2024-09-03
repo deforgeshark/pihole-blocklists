@@ -1,0 +1,12 @@
+https://dbl.oisd.nl/
+https://v.firebog.net/hosts/AdguardDNS.txt
+https://v.firebog.net/hosts/Admiral.txt
+https://v.firebog.net/hosts/Easylist.txt
+https://v.firebog.net/hosts/Easyprivacy.txt
+https://v.firebog.net/hosts/neohostsbasic.txt
+https://v.firebog.net/hosts/Prigent-Ads.txt
+https://v.firebog.net/hosts/Prigent-Crypto.txt
+https://v.firebog.net/hosts/Prigent-Malware.txt
+https://v.firebog.net/hosts/static/w3kbl.txt
+https://someonewhocares.org/hosts/hosts
+https://someonewhocares.org/hosts/zero/hosts
